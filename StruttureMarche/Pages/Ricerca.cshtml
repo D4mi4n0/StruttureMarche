@@ -6,50 +6,111 @@
 
 <div class="text-center">
     <h1 class="display-4">Ricerca Strutture Ricettive</h1>
-    <p>Utilizza i filtri sottostanti per cercare le strutture ricettive nella regione Marche.</p>
+    <p>Utilizza la barra di ricerca sottostante per cercare le strutture ricettive nella regione Marche.</p>
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <form method="get" asp-controller="Ricerca" asp-action="GetStrutture">
-            <div class="form-group">
-                <label for="denominazione">Denominazione</label>
-                <input type="text" class="form-control" id="denominazione" name="denominazione" value="@Model.Ricerca.Denominazione" />
+    <div class="col-md-12">
+        <form method="get" asp-page="Ricerca">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="comune" name="comune" value="@Model.Comune" placeholder="Cerca per Comune" />
             </div>
-            <div class="form-group">
-                <label for="comune">Comune</label>
-                <input type="text" class="form-control" id="comune" name="comune" value="@Model.Ricerca.Comune" />
-            </div>
-            <div class="form-group">
-                <label for="provincia">Provincia</label>
-                <input type="text" class="form-control" id="provincia" name="provincia" value="@Model.Ricerca.Provincia" />
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="provincia" name="provincia" value="@Model.Provincia" placeholder="Cerca per Provincia" />
             </div>
             <button type="submit" class="btn btn-primary">Cerca</button>
+            <button type="button" class="btn btn-secondary" onclick="resetFilters()">Reset</button>
         </form>
     </div>
-    <div class="col-md-8">
-        <table class="table table-striped mt-4">
-            <thead>
-                <tr>
-                    <th>Denominazione</th>
-                    <th>Comune</th>
-                    <th>Provincia</th>
-                    <th>Indirizzo</th>
-                    <th>Telefono</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var struttura in Model.Ricerca.Strutture)
-                {
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        @if (Model.Ricerca.Strutture == null || !Model.Ricerca.Strutture.Any())
+        {
+            <div class="text-center">
+                <p>Nessun risultato trovato</p>
+            </div>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td>@struttura.Denominazione</td>
-                        <td>@struttura.Comune</td>
-                        <td>@struttura.Provincia</td>
-                        <td>@struttura.Indirizzo</td>
-                        <td>@struttura.Telefono</td>
+                        <th>Denominazione</th>
+                        <th>Comune</th>
+                        <th>Provincia</th>
+                        <th>Indirizzo</th>
+                        <th>Telefono</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var struttura in Model.Ricerca.Strutture)
+                    {
+                        <tr>
+                            <td>@struttura.Denominazione</td>
+                            <td>@struttura.Comune</td>
+                            <td>@struttura.Provincia</td>
+                            <td>@struttura.Indirizzo</td>
+                            <td>@struttura.Telefono</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center pagination-sm">
+                    @if (Model.PageNumber > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">Precedente</a>
+                        </li>
+                    }
+                    @if (Model.PageNumber > 3)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="1" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="2" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">2</a>
+                        </li>
+                        <li class="page-item">
+                            <span class="page-link">...</span>
+                        </li>
+                    }
+                    @for (int i = Math.Max(1, Model.PageNumber - 2); i <= Math.Min(Model.TotalPages, Model.PageNumber + 2); i++)
+                    {
+                        <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@i" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">@i</a>
+                        </li>
+                    }
+                    @if (Model.PageNumber < Model.TotalPages - 2)
+                    {
+                        <li class="page-item">
+                            <span class="page-link">...</span>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@(Model.TotalPages - 1)" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">@Model.TotalPages - 1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@(Model.TotalPages)" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">@Model.TotalPages</a>
+                        </li>
+                    }
+                    @if (Model.PageNumber < Model.TotalPages)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">Successivo</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        }
     </div>
 </div>
+
+<script>
+    function resetFilters() {
+        document.getElementById('comune').value = '';
+        document.getElementById('provincia').value = '';
+    }
+</script>

@@ -1,11 +1,31 @@
 ﻿@page
 @model StruttureMarche.Pages.HomeModel
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Benvenuti</h1>
-    <p>Questo progetto fornisce un elenco delle strutture ricettive nella regione Marche.</p>
-    <p>Utilizza il sistema di ricerca per trovare le strutture in base ai tuoi criteri.</p>
+    <h1 class="display-4">Benvenuti nella Mappa delle Strutture Ricettive della Regione Marche</h1>
+    <p>Utilizza la barra di navigazione per esplorare le diverse funzionalità del sito.</p>
 </div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h2>Regole della Pagina di Ricerca</h2>
+            </div>
+            <div class="card-body">
+                <p>La pagina di ricerca consente di cercare le strutture ricettive nella regione Marche utilizzando i seguenti filtri:</p>
+                <ul>
+                    <li><strong>Comune:</strong> Inserisci il nome del comune per filtrare le strutture situate in quel comune.</li>
+                    <li><strong>Provincia:</strong> Inserisci il nome della provincia per filtrare le strutture situate in quella provincia.</li>
+                </ul>
+                <p>Se non vengono trovati risultati corrispondenti ai criteri di ricerca, verrà visualizzato il messaggio "Nessun risultato trovato".</p>
+                <p>Per effettuare una nuova ricerca, modifica i criteri di ricerca e clicca sul pulsante "Cerca".</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
