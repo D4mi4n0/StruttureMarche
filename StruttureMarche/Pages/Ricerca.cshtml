@@ -18,6 +18,7 @@
             <div class="input-group mb-3">
                 <input type="text" class="form-control" id="provincia" name="provincia" value="@Model.Provincia" placeholder="Cerca per Provincia" />
             </div>
+            <input type="hidden" id="pageNumber" name="pageNumber" value="@Model.PageNumber" />
             <button type="submit" class="btn btn-primary">Cerca</button>
             <button type="button" class="btn btn-secondary" onclick="resetFilters()">Reset</button>
         </form>
@@ -110,7 +111,6 @@
 
 <script>
     function resetFilters() {
-        document.getElementById('comune').value = '';
-        document.getElementById('provincia').value = '';
+        window.location.href = '@Url.Page("Ricerca")';
     }
 </script>
