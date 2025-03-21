@@ -4,10 +4,9 @@ namespace StruttureMarche.ViewModels
 {
     public class RicercaViewModel
     {
-        public string Denominazione { get; set; } // Add this line
-        public string Comune { get; set; } // Add this line
-        public string Provincia { get; set; } // Add this line
+        public string Denominazione { get; set; }
+        public string Comune { get; set; }
+        public string Provincia { get; set; }
         public List<ModelliServiziMarche> Strutture { get; set; }
     }
-
 }

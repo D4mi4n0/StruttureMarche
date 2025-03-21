@@ -14,6 +14,8 @@ namespace StruttureMarche.Pages
         [BindProperty]
         public RicercaViewModel Ricerca { get; set; }
         [BindProperty(SupportsGet = true)]
+        public string Denominazione { get; set; }
+        [BindProperty(SupportsGet = true)]
         public string Comune { get; set; }
         [BindProperty(SupportsGet = true)]
         public string Provincia { get; set; }
@@ -23,7 +25,7 @@ namespace StruttureMarche.Pages
 
         public async Task OnGetAsync()
         {
-            var strutture = await GetFilteredStrutture(Comune, Provincia);
+            var strutture = await GetFilteredStrutture(Denominazione, Comune, Provincia);
             TotalPages = (int)Math.Ceiling(strutture.Count / (double)PageSize);
 
             Ricerca = new RicercaViewModel
@@ -32,10 +34,16 @@ namespace StruttureMarche.Pages
             };
         }
 
-        private async Task<List<Marche.modelli.ModelliServiziMarche>> GetFilteredStrutture(string comune, string provincia)
+        private async Task<List<Marche.modelli.ModelliServiziMarche>> GetFilteredStrutture(string denominazione, string comune, string provincia)
         {
             var allStrutture = await GetAllStrutture(); // Metodo per ottenere tutte le strutture
             var filteredStrutture = allStrutture.AsQueryable();
+
+            if (!string.IsNullOrEmpty(denominazione))
+            {
+                filteredStrutture = filteredStrutture.Where(s =>
+                    s.Denominazione.Contains(denominazione, StringComparison.OrdinalIgnoreCase));
+            }
 
             if (!string.IsNullOrEmpty(comune))
             {

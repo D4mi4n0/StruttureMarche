@@ -13,6 +13,9 @@
     <div class="col-md-12">
         <form method="get" asp-page="Ricerca">
             <div class="input-group mb-3">
+                <input type="text" class="form-control" id="denominazione" name="denominazione" value="@Model.Denominazione" placeholder="Cerca per Denominazione" />
+            </div>
+            <div class="input-group mb-3">
                 <input type="text" class="form-control" id="comune" name="comune" value="@Model.Comune" placeholder="Cerca per Comune" />
             </div>
             <div class="input-group mb-3">
@@ -64,16 +67,16 @@
                     @if (Model.PageNumber > 1)
                     {
                         <li class="page-item">
-                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">Precedente</a>
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-denominazione="@Model.Denominazione" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">Precedente</a>
                         </li>
                     }
                     @if (Model.PageNumber > 3)
                     {
                         <li class="page-item">
-                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="1" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">1</a>
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="1" asp-route-denominazione="@Model.Denominazione" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">1</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="2" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">2</a>
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="2" asp-route-denominazione="@Model.Denominazione" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">2</a>
                         </li>
                         <li class="page-item">
                             <span class="page-link">...</span>
@@ -82,7 +85,7 @@
                     @for (int i = Math.Max(1, Model.PageNumber - 2); i <= Math.Min(Model.TotalPages, Model.PageNumber + 2); i++)
                     {
                         <li class="page-item @(i == Model.PageNumber ? "active" : "")">
-                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@i" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">@i</a>
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@i" asp-route-denominazione="@Model.Denominazione" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">@i</a>
                         </li>
                     }
                     @if (Model.PageNumber < Model.TotalPages - 2)
@@ -91,16 +94,16 @@
                             <span class="page-link">...</span>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@(Model.TotalPages - 1)" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">@Model.TotalPages - 1</a>
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@(Model.TotalPages - 1)" asp-route-denominazione="@Model.Denominazione" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">@Model.TotalPages - 1</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@(Model.TotalPages)" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">@Model.TotalPages</a>
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@(Model.TotalPages)" asp-route-denominazione="@Model.Denominazione" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">@Model.TotalPages</a>
                         </li>
                     }
                     @if (Model.PageNumber < Model.TotalPages)
                     {
                         <li class="page-item">
-                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">Successivo</a>
+                            <a class="page-link" asp-page="Ricerca" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-denominazione="@Model.Denominazione" asp-route-comune="@Model.Comune" asp-route-provincia="@Model.Provincia">Successivo</a>
                         </li>
                     }
                 </ul>
